@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SLAP.research – Smart Price &amp; Review Finder</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="second.css">
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="logo" onclick="showView('home')">🔍 <span>SLAP.research</span></div>
+    <div class="top-actions">
+      <button class="nav-btn active" id="nav-home" onclick="showView('home')">Product Search</button>
+      <button class="nav-btn" id="nav-agent" onclick="showView('agent')">Research Agent</button>
+      <div class="settings-wrap">
+        <button class="settings-btn" onclick="toggleSettings()">⚙️</button>
+        <div class="settings-panel" id="settingsPanel">
+          <h4>Theme</h4>
+          <div class="theme-options">
+            <button class="theme-btn active" data-theme="dark" onclick="setTheme('dark')">Dark</button>
+            <button class="theme-btn" data-theme="mid" onclick="setTheme('mid')">Mid</button>
+            <button class="theme-btn" data-theme="light" onclick="setTheme('light')">Light</button>
+          </div>
+
+          <h4>Gemini API Key</h4>
+          <input id="apiKeyInput" type="password" placeholder="Paste your API key here" style="margin-bottom:8px;" autocomplete="off">
+          <div style="display:flex;gap:8px;margin-bottom:6px;">
+            <button class="btn btn-sm" style="flex:1;" onclick="saveApiKey()">Save Key</button>
+            <button class="btn btn-outline btn-sm" style="flex:1;" onclick="clearApiKey()">Clear Key</button>
+          </div>
+          <p class="api-status" id="apiKeyStatus">No key saved</p>
+          <button class="btn btn-outline btn-sm" style="width:100%;margin-top:12px;" onclick="clearSaved()">Clear All Saved Data</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOME -->
+  <div id="view-home" class="view active">
+    <div class="hero">
+      <h1>Find Best Price &amp; Reviews</h1>
+      <p>Search any product or pick a category. Opens live Google Shopping, price comparisons and reviews in a new tab.</p>
+    </div>
+
+    <div class="search-box">
+      <label>Search any product</label>
+      <div class="search-row">
+        <input id="productInput" type="text" placeholder="e.g. iPhone 16, pressure cooker, running shoes..." onkeydown="if(event.key==='Enter') searchProduct()">
+        <button class="btn" onclick="searchProduct()">Search</button>
+      </div>
+
+      <div class="cat-label">Major categories</div>
+      <div class="quick-actions">
+        <div class="quick-btn" onclick="quickSearch('smartphones mobiles')"><span class="qicon">📱</span><span class="qlabel">Mobiles</span></div>
+        <div class="quick-btn" onclick="quickSearch('laptops notebooks')"><span class="qicon">💻</span><span class="qlabel">Laptops</span></div>
+        <div class="quick-btn" onclick="quickSearch('headphones earphones')"><span class="qicon">🎧</span><span class="qlabel"></span></div>
+        <div class="quick-btn" onclick="quickSearch('smart TV LED')"><span class="qicon">📺</span><span class="qlabel">TVs</span></div>
+        <div class="quick-btn" onclick="quickSearch('refrigerator washing machine AC')"><span class="qicon">🏠</span><span class="qlabel">Appliances</span></div>
+        <div class="quick-btn" onclick="quickSearch('shoes sneakers men women')"><span class="qicon">👟</span><span class="qlabel">Footwear</span></div>
+        <div class="quick-btn" onclick="quickSearch('smartwatch fitness band')"><span class="qicon">⌚</span><span class="qlabel">Wearables</span></div>
+        <div class="quick-btn" onclick="quickSearch('camera DSLR mirrorless')"><span class="qicon">📷</span><span class="qlabel">Cameras</span></div>
+      </div>
+    </div>
+
+    <div class="result-card" id="productResult">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+        <div>
+          <span class="badge">GOOGLE CONNECTED</span>
+          <h2 id="resultTitle" style="margin-top:6px;">Results</h2>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="document.getElementById('productResult').classList.remove('show')">Close</button>
+      </div>
+      <p style="color:var(--muted);margin:12px 0 8px;">Click any link to open live results in a new tab.</p>
+      <div class="section-title">Best price &amp; shopping</div>
+      <ul class="link-list">
+        <li><span>🛒 Google Shopping</span><a id="link-shopping" href="#" target="_blank" rel="noopener">Open ↗</a></li>
+        <li><span>💰 Best price search</span><a id="link-bestprice" href="#" target="_blank" rel="noopener">Open ↗</a></li>
+        <li><span>📦 Amazon.in</span><a id="link-amazon" href="#" target="_blank" rel="noopener">Open ↗</a></li>
+        <li><span>🏪 Flipkart</span><a id="link-flipkart" href="#" target="_blank" rel="noopener">Open ↗</a></li>
+      </ul>
+      <div class="section-title">Reviews &amp; ratings</div>
+      <ul class="link-list">
+        <li><span>⭐ Google reviews</span><a id="link-reviews" href="#" target="_blank" rel="noopener">Open ↗</a></li>
+        <li><span>📹 YouTube reviews</span><a id="link-youtube" href="#" target="_blank" rel="noopener">Open ↗</a></li>
+        <li><span>📰 Expert reviews</span><a id="link-expert" href="#" target="_blank" rel="noopener">Open ↗</a></li>
+      </ul>
+      <div class="tip">
+        Tip: On Google Shopping, sort by “Price: low to high” and check seller ratings. Verify return policy before buying.
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:36px;">
+      <p style="color:var(--muted);margin-bottom:12px;">Need deeper market research?</p>
+      <button class="btn btn-outline" onclick="showView('agent')">Open Research Agent →</button>
+    </div>
+  </div>
+
+  <!-- RESEARCH AGENT -->
+  <div id="view-agent" class="view">
+    <div class="hero" style="margin-bottom:20px;">
+      <h1 style="font-size:1.7rem;">Research Agent</h1>
+      <p>Open-ended business questions → structured report with sources.</p>
+    </div>
+    <div class="card">
+      <label>Research Question *</label>
+      <textarea id="q-question" placeholder="e.g. Should we launch an electric scooter subscription in Bengaluru?"></textarea>
+      <div class="form-row">
+        <div>
+          <label>Domain</label>
+          <select id="q-domain">
+            <option>Enterprise &amp; Business Operations</option>
+            <option>Technology &amp; Cybersecurity</option>
+            <option>Healthcare</option>
+            <option>Fintech</option>
+            <option>Consumer / Retail</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div>
+          <label>Location</label>
+          <input id="q-location" type="text" placeholder="e.g. Bengaluru, India">
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label>Focus Areas</label>
+          <input id="q-focus" type="text" placeholder="competitors, pricing, risks">
+        </div>
+        <div>
+          <label>Context</label>
+          <input id="q-context" type="text" placeholder="e.g. Early-stage startup">
+        </div>
+      </div>
+      <label>Notes</label>
+      <textarea id="q-notes" placeholder="Budget, timeline..."></textarea>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">
+        <button class="btn" id="runBtn" onclick="runResearch()">🚀 Run Research</button>
+        <button class="btn btn-outline" onclick="saveFormData()">💾 Save Draft</button>
+        <button class="btn btn-outline" onclick="loadFormData()">📂 Load</button>
+        <button class="btn btn-outline" onclick="showView('home')">← Product Search</button>
+      </div>
+    </div>
+    <div class="card" id="agentResult" style="display:none;"></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- ONLY ONE script. Put the fixed JavaScript in app.js -->
+  <script src="home.js"></script>
+</body>
+</html>

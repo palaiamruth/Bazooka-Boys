@@ -1,0 +1,34 @@
+/* Links */
+.link-list{list-style:none;padding:0}
+.link-list li{background:var(--input-bg);border-left:3px solid var(--accent);padding:12px 16px;margin-bottom:8px;border-radius:0 8px 8px 0;display:flex;justify-content:space-between;align-items:center;gap:10px;transition:transform .2s,background .2s}
+.link-list li:hover{transform:translateX(4px);background:var(--bg)}
+.link-list a{color:var(--link);text-decoration:none;font-weight:600}
+.link-list a:hover{text-decoration:underline}
+.section-title{font-size:1.05rem;font-weight:600;margin:20px 0 10px;display:flex;align-items:center;gap:8px}
+.section-title::before{content:'';width:4px;height:16px;background:var(--accent);border-radius:2px}
+
+/* Card + form */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:26px;margin-bottom:24px;box-shadow:var(--shadow);animation:fadeUp .35s ease}
+label{display:block;font-weight:600;margin-bottom:6px;font-size:.9rem}
+input,textarea,select{width:100%;background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:11px 13px;border-radius:8px;font-size:.95rem;margin-bottom:14px;font-family:inherit;transition:border-color .2s,box-shadow .2s}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
+textarea{min-height:90px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.form-row{grid-template-columns:1fr}}
+
+/* Table */
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.88rem}
+th,td{border:1px solid var(--border);padding:10px 12px;text-align:left}
+th{background:var(--input-bg)}
+tbody tr:hover{background:var(--input-bg)}
+
+/* Tags */
+.tag{display:inline-block;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:5px;margin-right:4px;color:var(--c);background:color-mix(in srgb,var(--c) 18%,transparent)}
+.tag-green{--c:#6fcf9b}.tag-red{--c:#f08a85}.tag-orange{--c:#e8b658}
+
+/* Toast + tip */
+.toast{position:fixed;bottom:24px;right:24px;background:#1f2937;color:#fff;padding:11px 18px;border-radius:8px;font-weight:600;display:none;z-index:200;box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.toast.show{display:block;animation:fadeUp .25s}
+.tip{font-size:.88rem;color:var(--muted);margin-top:14px;padding:12px 14px;background:var(--input-bg);border-radius:8px;border:1px solid var(--border)}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
